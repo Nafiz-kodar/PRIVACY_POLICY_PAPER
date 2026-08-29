@@ -1,0 +1,73 @@
+[ 11] BASIC Bank PLC -> https://basicbankplc.com/en/page-details/basic-i-account-privacy-policy
+      OK (8,310 chars extracted)
+[ 12] BRAC Bank PLC -> https://bblcorpnet.bracbank.com/privacy-policy
+      OK (9,312 chars extracted)
+[ 13] Bank Asia PLC -> https://bankasia-bd.com/link/App-Privacy-Policy.html
+      OK (12,683 chars extracted)
+[ 14] Prime Bank PLC -> https://primepay-mobileapp.primebank.com.bd/privacy_policy_new.html
+      FAILED: ConnectionError: HTTPSConnectionPool(host='primepay-mobileapp.primebank.com.bd', port=443): Max retries exceeded with url: /privacy_policy_new.html (Caused by NewConnectionError("HTTPSConnection(host='primepay-mobileapp.primebank.com.bd', port=443): Failed to establish a new connection: [Errno 61] Connection refused"))
+[ 15] Mutual Trust Bank PLC -> https://ibank.mutualtrustbank.com/privacy_policy.html
+      OK (5,062 chars extracted)
+[ 16] Eastern Bank PLC -> https://ebl.com.bd/links/privacy_policy_of_ebl_skybanking.html
+      OK (73,529 chars extracted)
+[ 17] State Bank of India - Bangladesh Operations -> https://bd.statebank/privacy-policy
+      OK (6,260 chars extracted)
+[ 18] HSBC Bangladesh -> https://www.business.hsbc.com.bd/en-gb/regulations/privacy
+      OK (23,990 chars extracted)
+[  1] Grameenphone Limited -> https://www.grameenphone.com/privacy-notice
+      OK (5,609 chars extracted)
+[  2] Robi Axiata PLC -> https://www.robi.com.bd/privacy-policy
+      OK (30 chars extracted)
+[  3] Banglalink Digital Communications Limited -> https://banglalink.net/legal
+      OK (38 chars extracted)
+[  4] Teletalk Bangladesh Limited -> https://www.teletalk.com.bd/en/privacy-policy
+      FAILED: SSLError: HTTPSConnectionPool(host='www.teletalk.com.bd', port=443): Max retries exceeded with url: /en/privacy-policy (Caused by SSLError(SSLError(1, '[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1081)')))
+[  8] bKash Limited -> https://www.bkash.com/en/page/privacy-notice
+      OK (8,858 chars extracted)
+[  9] Nagad Limited -> https://nagad.com.bd/pg/?n=privacy-policy
+      OK (3 chars extracted)
+[ 10] UCB Fintech Company Limited - upay -> https://privacypolicy.upaybd.com/
+      OK (9,962 chars extracted)
+[ 23] Pickaboo - Silver Water Technologies Bangladesh Limited -> https://www.pickaboo.com/privacy-policy
+      OK (12,947 chars extracted)
+[ 25] Othoba.com -> https://www.othoba.com/privacy-policy
+      OK (36,530 chars extracted)
+[ 36] AYESH -> https://ayesh.com.bd/privacy-policy
+      OK (3,190 chars extracted)
+[ 24] Daraz Bangladesh Limited -> https://www.daraz.com.bd/privacy-policy/
+      OK (32,150 chars extracted)
+[ 35] Sashroye Bangladesh -> https://sashroye.com.bd/privacy-policy
+      FAILED: ConnectionError: HTTPSConnectionPool(host='sashroye.com.bd', port=443): Max retries exceeded with url: /privacy-policy (Caused by NameResolutionError("HTTPSConnection(host='sashroye.com.bd', port=443): Failed to resolve 'sashroye.com.bd' ([Errno 8] nodename nor servname provided, or not known)"))
+[ 40] HalalBari -> https://halalbari.com/page/privacy-policy
+      OK (88 chars extracted)
+[ 38] Koleer Bangladesh -> https://koleer.com.bd/privacy-policy/
+      OK (2,843 chars extracted)
+[ 42] Kallol Limited - Titan Watches Bangladesh -> https://titanwatches.com.bd/pages/privacy-notice
+      OK (2,644 chars extracted)
+[ 48] Fiza & Co. Private Limited -> https://fiza.com.bd/privacy-policy
+      OK (4,874 chars extracted)
+[ 61] My Lab Medical and Diagnostic Centre Private Limited -> https://mylab.com.bd/privacy-policy
+      OK (15,154 chars extracted)
+[ 62] Popular Diagnostic Centre Limited -> https://www.populardiagnostic.com/privacy%26policy
+      OK (79 chars extracted)
+[ 65] Gazaria Popular Hospital and Diagnostic Centre -> https://gazariahospital.com/privacy/
+      OK (9,120 chars extracted)
+[ 63] Samitivej Hospital Bangladesh -> https://www.samitivejhospital-bangladesh.com/privacy-policy
+      OK (63 chars extracted)
+[ 64] Hospice Bangladesh -> https://hospicebangladesh.com/privacy-policy/
+      OK (17,929 chars extracted)
+[ 66] AMAR Home Drug Addiction Treatment Center -> https://amarhome.com.bd/privacy-policy/
+      OK (13,421 chars extracted)
+[ 97] Prothom Alo -> https://www.prothomalo.com/privacy-policy
+      OK (18,302 chars extracted)
+[ 98] Daily Sun -> https://www.daily-sun.com/privacy-policy
+      OK (15,133 chars extracted)
+[ 99] New Age -> https://www.newagebd.net/page/3/privacy-policy
+      OK (11,783 chars extracted)
+[  6] Bangladesh Export Import Company Limited - IT Division -> https://bol-online.com/privacy-policy
+      OK (14,851 chars extracted)
+[ 89] Nhimex Software -> https://nhimexsoftware.com/privacy-policy
+      OK (7,316 chars extracted)
+
+Done: 32 ok, 3 failed, out of 35
+Wrote /Users/nafizahmed/Library/CloudStorage/GoogleDrive-nafizahmednafi@gmail.com/Other computers/My Computer/BRACU Books and Classnotes/3rd year/9th sem/cse440/project/bd_external_validation/data/bd_extracted_text.csv

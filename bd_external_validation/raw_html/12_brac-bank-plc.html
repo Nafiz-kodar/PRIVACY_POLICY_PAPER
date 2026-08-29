@@ -1,0 +1,403 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRAC Bank PLC CORPnet Privacy Policy</title>
+    <meta name="description" content="Privacy Policy for BRAC Bank PLC's CORPnet corporate internet banking portal.">
+    <meta name="theme-color" content="#007bff">
+    <style>
+        /* ==========================================================
+           Typography and colors below are pulled directly from the
+           live BRAC Bank Obichol Loan App Privacy Policy page markup:
+           - font-family: "Helvetica Neue", sans-serif
+           - base font-size: 12pt (16px)
+           - body text color: rgb(0,0,0)
+           - line-height: 1.39
+           - link color: rgb(70,120,134) / #467886, underlined
+           - theme accent: #007bff (site meta-theme-color)
+           ========================================================== */
+        :root{
+            --font: "Helvetica Neue", Helvetica, Arial, "LiAdorNoirritt", sans-serif;
+            --text: rgb(0,0,0);
+            --link: #467886;
+            --brand-blue: #0072BC;
+            --brand-blue-dark: #005a94;
+            --brand-gold: #E3A62C;
+            --accent: #0072BC;
+            --line: #e3e3e3;
+            --bg: #ffffff;
+            --panel: #fafafa;
+            --max: 800px;
+        }
+        *{box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        body{
+            margin:0;
+            font-family:var(--font);
+            font-size:12pt;
+            color:var(--text);
+            background:var(--bg);
+            line-height:1.39;
+        }
+        a{color:var(--link); text-decoration:underline;}
+        a:hover{opacity:.85;}
+
+        /* Header / masthead - mirrors BRAC Bank's real header: white top row
+           with logo + url, solid brand-blue bar with bold white title below */
+        header{
+            background:var(--bg);
+        }
+        .header-inner{
+            max-width:1040px;
+            margin:0 auto;
+            padding:16px 24px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            flex-wrap:wrap;
+            gap:12px;
+        }
+        .logo{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            font-weight:800;
+            font-size:18pt;
+            color:var(--brand-blue);
+            letter-spacing:.01em;
+        }
+        .logo-mark{
+            width:26px;
+            height:26px;
+            border-radius:3px;
+            background:var(--brand-blue);
+            position:relative;
+            overflow:hidden;
+            flex:none;
+        }
+        .logo-mark::after{
+            content:"";
+            position:absolute;
+            right:0; bottom:0;
+            width:0; height:0;
+            border-style:solid;
+            border-width:0 0 26px 26px;
+            border-color:transparent transparent var(--brand-gold) transparent;
+        }
+        .site-url{
+            font-size:10pt;
+            color:#333;
+        }
+
+        .title-band{
+            background:var(--brand-blue);
+        }
+        .title-inner{
+            max-width:var(--max);
+            margin:0 auto;
+            padding:20px 24px;
+        }
+        h1{
+            font-family:var(--font);
+            font-size:16pt;
+            font-weight:800;
+            color:#ffffff;
+            margin:0 0 6px;
+            line-height:1.3;
+        }
+        .subtitle{
+            font-size:11pt;
+            color:#eaf3fb;
+            margin:0;
+        }
+
+        /* Layout */
+        .layout{
+            display:grid;
+            grid-template-columns:210px 1fr;
+            gap:36px;
+            max-width:1040px;
+            margin:0 auto;
+            padding:32px 24px 70px;
+            align-items:start;
+        }
+
+        nav.toc{
+            position:sticky;
+            top:16px;
+            font-size:10.5pt;
+        }
+        nav.toc h2{
+            font-size:9pt;
+            text-transform:uppercase;
+            letter-spacing:.06em;
+            color:#777;
+            font-weight:700;
+            margin:0 0 8px;
+        }
+        nav.toc ol{
+            list-style:none;
+            margin:0;padding:0;
+            counter-reset:toc;
+            border-left:2px solid var(--line);
+        }
+        nav.toc li{counter-increment:toc;}
+        nav.toc a{
+            display:block;
+            padding:5px 0 5px 12px;
+            color:var(--text);
+            text-decoration:none;
+            border-left:2px solid transparent;
+            margin-left:-2px;
+        }
+        nav.toc a:hover, nav.toc a:focus-visible{
+            color:var(--link);
+            border-left-color:var(--accent);
+        }
+        nav.toc a::before{
+            content:counter(toc) ". ";
+            color:var(--accent);
+            font-weight:700;
+        }
+
+        main.doc{
+            max-width:var(--max);
+        }
+
+        .intro p{margin:0 0 10pt;}
+        .intro{margin-bottom:6pt;}
+
+        section.clause{
+            margin-bottom:22pt;
+            scroll-margin-top:16px;
+        }
+        section.clause h3{
+            font-family:var(--font);
+            font-size:12pt;
+            font-weight:700;
+            color:var(--text);
+            margin:0 0 8pt;
+        }
+        section.clause p{margin:0 0 10pt;}
+        section.clause p:last-child{margin-bottom:0;}
+        section.clause ul{
+            margin:0 0 10pt;
+            padding-left:22px;
+        }
+        section.clause li{margin-bottom:6pt;}
+
+        .callout{
+            background:var(--panel);
+            border:1px solid var(--line);
+            border-left:3px solid var(--brand-gold);
+            padding:10px 14px;
+            font-size:11pt;
+            margin-top:8pt;
+        }
+
+        .contact-line{
+            margin-top:4pt;
+        }
+        .contact-line a{margin-right:4px;}
+
+        hr.rule{
+            border:none;
+            border-top:1px solid var(--line);
+            margin:28pt 0;
+        }
+
+        /* Footer - mirrors the site's footer info block */
+        footer{
+            background:var(--panel);
+            border-top:1px solid var(--line);
+            padding:28px 24px;
+            font-size:10pt;
+            color:#333;
+        }
+        .footer-inner{
+            max-width:1040px;
+            margin:0 auto;
+            text-align:center;
+        }
+        footer a{color:var(--link);}
+        footer .copyright{
+            margin-top:10px;
+            color:#777;
+            font-size:9pt;
+        }
+
+        @media (max-width:820px){
+            .layout{grid-template-columns:1fr;}
+            nav.toc{position:static;margin-bottom:20px;border-bottom:1px solid var(--line);padding-bottom:16px;}
+            .header-inner{padding:14px 18px;}
+            .title-inner{padding:22px 18px 18px;}
+            .layout{padding:24px 18px 50px;}
+        }
+
+        .intro p{margin:0 0 10pt; text-align:justify;}
+        section.clause p{margin:0 0 10pt; text-align:justify;}
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo"><span class="logo-mark" aria-hidden="true"></span>BRAC BANK</div>
+        <div class="site-url">www.bracbank.com</div>
+    </div>
+</header>
+
+<div class="title-band">
+    <div class="title-inner">
+        <h1>CORPnet Privacy Policy</h1>
+        <p class="subtitle">Corporate internet banking portal — privacy and data practices</p>
+    </div>
+</div>
+
+<div class="layout">
+    <nav class="toc" aria-label="Table of contents">
+        <h2>On this page</h2>
+        <ol>
+            <li><a href="#definitions">Definitions</a></li>
+            <li><a href="#agreement">Agreement to Policy</a></li>
+            <li><a href="#gathering">Information We Collect</a></li>
+            <li><a href="#usage">Usage of Information</a></li>
+            <li><a href="#disclosure">Disclosure of Information</a></li>
+            <li><a href="#retention">Data Retention</a></li>
+            <li><a href="#updating">Updating Your Information</a></li>
+            <li><a href="#security">Security Measures</a></li>
+            <li><a href="#transfer">Consent to Transfer</a></li>
+            <li><a href="#authorized-use">Authorized Use Only</a></li>
+            <li><a href="#aml">Anti-Money Laundering</a></li>
+            <li><a href="#termination">Termination of Service</a></li>
+            <li><a href="#questions">Questions and Concerns</a></li>
+            <li><a href="#updates">Policy Updates and Effective Date</a></li>
+        </ol>
+    </nav>
+
+    <main class="doc">
+        <div class="intro">
+            <p>This CORPnet privacy policy ("policy") applies to corporate clients, authorized signatories, and other authorized users ("you", "user") of the CORPnet corporate internet banking portal ("CORPnet", "the portal") of BRAC Bank PLC. The terms "BRAC Bank", "bank", "we", "us", or "our(s)" in this policy refer to BRAC Bank PLC.</p>
+            <p>BRAC Bank is firmly committed to protecting the privacy of its corporate clients and has taken all necessary and reasonable measures to safeguard the confidentiality of any information transmitted through CORPnet. This online privacy policy explains how we collect, share, use, and protect information when your organization's authorized users access or use CORPnet.</p>
+            <p>Through CORPnet, authorized users of corporate clients can view account information, initiate and approve transactions, manage trade and treasury instructions, generate statements and reports, and carry out other corporate banking activities online, subject to the mandates and approval workflows set up by the client organization.</p>
+            <p>As you review this CORPnet privacy policy, here are a few general principles to keep in mind:</p>
+        </div>
+
+        <section class="clause" id="definitions">
+            <h3>Definitions</h3>
+            <ul>
+                <li><strong>Bank (BBPLC):</strong> BRAC Bank PLC, having its registered office at Anik Tower, 220/B, Tejgaon-Gulshan Link Road, Tejgaon I/A, Dhaka 1208, Bangladesh.</li>
+                <li><strong>Corporate Client:</strong> An organization with an account at BRAC Bank that is enrolled in CORPnet.</li>
+                <li><strong>Users:</strong> Individuals authorized by a Corporate Client to access CORPnet, typically assigned one of three roles — <em>Maker</em>, <em>Checker</em>, or <em>Approver</em> — as set out in the client's Board Resolution.</li>
+                <li><strong>2FA Device:</strong> A hardware or software token that generates a one-time password (OTP) for two-factor authentication.</li>
+                <li><strong>Instructions:</strong> Communications from a Corporate Client to the Bank, submitted through CORPnet in accordance with agreed security procedures.</li>
+            </ul>
+        </section>
+
+        <section class="clause" id="agreement">
+            <h3>1.&nbsp;Agreement to Policy</h3>
+            <p>By registering for, logging into, or otherwise using CORPnet through a web browser on any device, you confirm your affirmative consent — on behalf of yourself and, where applicable, your organization — to all the terms of this policy detailed below, and agree to comply with any other security procedures we may establish from time to time.</p>
+        </section>
+
+        <section class="clause" id="gathering">
+            <h3>2.&nbsp;Gathering, Using and Sharing: Information That We Collect</h3>
+            <p>Information we may collect about you and your organization through CORPnet includes information provided during onboarding or by your relationship manager, such as company name, registration and incorporation details, business address, authorized signatory names and designations, contact information (phone, email), account and transaction mandates, and information disclosed for KYC and due diligence purposes. We may also gather additional information from other sources to verify the information provided.</p>
+        </section>
+
+        <section class="clause" id="usage">
+            <h3>3.&nbsp;Usage of Information</h3>
+            <p>In addition to the information described above, we may collect certain information about your use of CORPnet. For example, we may capture the IP address and browser of the device you use to log in, login timestamps, session duration, transaction and approval activity, and other information about actions taken within the portal.</p>
+            <p>We use the information discussed above in several ways, such as:</p>
+            <ul>
+                <li>To verify the identity of the corporate client and its authorized users</li>
+                <li>To process transactions, approvals, and requests initiated through CORPnet</li>
+                <li>To maintain accurate account and mandate records</li>
+                <li>To protect, investigate, and deter against fraudulent, unauthorized, or illegal activity.</li>
+            </ul>
+        </section>
+
+        <section class="clause" id="disclosure">
+            <h3>4.&nbsp;Disclosure of Information</h3>
+            <p>By enrolling in CORPnet, the Corporate Client authorizes BRAC Bank to use its and its Users' personal and account information where required, for the purposes described in this policy. We will take necessary measures to keep that information confidential, and will disclose it to third parties, with your authorization, <strong>only</strong> in the following situations:</p>
+            <ul>
+                <li>To comply with the requirements of the law, or as required by the government or a supervisory or regulatory organization.</li>
+                <li>To prevent fraud, or for other reasons required under applicable banking rules and regulations.</li>
+                <li>To address, rectify, ameliorate, or mitigate fraud, security, or technical issues.</li>
+                <li>With our trusted service providers (when required) who work on our behalf and do not have an independent use of the information we disclose to them; such providers have agreed to adhere to the rules in this privacy policy.</li>
+            </ul>
+            <p>Information exchanged between the Corporate Client and BRAC Bank through CORPnet, including Instructions submitted by Users, is treated as confidential and is used only to verify, process, and execute the requested banking activity.</p>
+        </section>
+
+        <section class="clause" id="retention">
+            <h3>5.&nbsp;Data Retention</h3>
+            <p>Our operational systems will store organization- and user-provided data for as long as your organization uses the related feature of CORPnet. Please note that some or all of the provided data may be required for CORPnet to function properly, and we may be required by law or regulation to retain certain information beyond the period of use.</p>
+        </section>
+
+        <section class="clause" id="updating">
+            <h3>6.&nbsp;Updating Your Information</h3>
+            <p>Authorized users can review certain account and profile information through CORPnet. Changes to registered signatories, mandates, or company details must be requested through your relationship manager or branch, in line with the bank's applicable verification procedures.</p>
+        </section>
+
+        <section class="clause" id="security">
+            <h3>7.&nbsp;Security Measures</h3>
+            <ul>
+                <li>Protecting the confidentiality of your information is very important to us. We have established appropriate physical, electronic, and procedural safeguards to protect the information we collect from or about CORPnet users. Access to this information is limited to authorized employees and contractors who need it to operate, develop, or improve CORPnet, and these safeguards are reviewed regularly.</li>
+                <li>Each User receives a unique User ID by email and a temporary password by SMS to their registered mobile number, and must change this password on first login and periodically thereafter. The User ID and password, together with any 2FA Device, serve as the User's authorized signature for transactions carried out on CORPnet.</li>
+                <li>Users are responsible for keeping their credentials and 2FA Devices confidential and must not share them with anyone. If a token is lost or a password is compromised, the User must notify BRAC Bank immediately so the User ID can be deactivated; the Bank may also suspend access on being notified that credentials have been compromised.</li>
+                <li>Corporate Clients are responsible for maintaining up-to-date anti-virus and anti-spyware protection on the devices used to access CORPnet, and for taking reasonable precautions where Users access CORPnet using third-party email domains (such as Google, Yahoo, or Hotmail), which carry inherent additional risk.</li>
+                <li>We take reasonable security measures to help protect your information, both during transmission and once we receive it. However, no method of electronic transmission or storage is 100% secure, and use of the internet carries inherent risk that Users accept when using CORPnet.</li>
+            </ul>
+            <div class="callout">Never share your CORPnet User ID, password, or one-time codes with anyone, including anyone claiming to represent BRAC Bank.</div>
+        </section>
+
+        <section class="clause" id="transfer">
+            <h3>8.&nbsp;Consent to Transfer</h3>
+            <p>If your organization or its authorized users are located outside of Bangladesh, please be aware that the information we collect through CORPnet will be transferred to and processed in Bangladesh. By using CORPnet or providing us with any information, you fully understand and unambiguously consent to this transfer, processing, and storage of your data in Bangladesh.</p>
+        </section>
+
+        <section class="clause" id="authorized-use">
+            <h3>9.&nbsp;Authorized Use Only</h3>
+            <p>CORPnet is intended solely for use by corporate clients and their duly authorized signatories and representatives acting in a business capacity. Access must not be granted to, or used by, individuals who are not authorized by the client organization, including persons under the age of 18.</p>
+        </section>
+
+        <section class="clause" id="aml">
+            <h3>10.&nbsp;Anti-Money Laundering</h3>
+            <p>Users agree not to use CORPnet for money laundering or any other illegal or unlawful purpose, and to fully comply with applicable anti-money laundering and anti-terrorism laws. BRAC Bank reserves the right to request an explanation from the Corporate Client regarding any suspicious transaction, and to take appropriate action in line with banking rules, regulations, and applicable law.</p>
+        </section>
+
+        <section class="clause" id="termination">
+            <h3>11.&nbsp;Termination of Service</h3>
+            <p>A Corporate Client may request termination of CORPnet at any BRAC Bank branch or through their Relationship Manager by giving at least 30 days' written notice; termination takes effect on or before the 30th day after the request is submitted. BRAC Bank may also suspend or terminate CORPnet access, with or without prior notice, where reasonably necessary under applicable banking rules and regulations. Termination does not affect either party's obligations, or any Instructions given, before the effective date of termination — including our obligations regarding information already collected under this policy.</p>
+        </section>
+
+        <section class="clause" id="questions">
+            <h3>12.&nbsp;Questions and Concerns</h3>
+            <p>If you have any questions about this policy or our privacy practices, please call our 24/7 call center at 16221 or email us at <a href="mailto:enquiry@bracbank.com">enquiry@bracbank.com</a>.</p>
+        </section>
+
+        <section class="clause" id="updates">
+            <h3>13.&nbsp;Policy Updates and Effective Date</h3>
+            <p>This policy is subject to change, and any changes will become effective when posted on CORPnet. Continued use of CORPnet after such changes means you accept the revised policy.</p>
+        </section>
+    </main>
+</div>
+
+<footer>
+    <div class="footer-inner">
+        <p><strong>BRAC Bank PLC</strong><br>
+            Anik Tower, 220/B, Tejgaon-Gulshan Link Road, Tejgaon, Dhaka-1208</p>
+        <p>24/7 Call Center: <a href="tel:16221">16221</a> &nbsp;|&nbsp; <a href="mailto:corpnetsupport@bracbank.com.">corpnetsupport@bracbank.com.</a></p>
+        <p class="copyright">This policy, and the use of CORPnet, is governed by the laws of the People's Republic of Bangladesh.</p>
+        <p class="copyright">© 2026 Copyright By BRAC Bank PLC</p>
+    </div>
+</footer>
+
+</body>
+</html>

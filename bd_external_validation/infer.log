@@ -1,0 +1,48 @@
+26/35 companies had usable extracted text (>= 500 chars)
+Dropped 6 as likely JS-rendered / empty shell (< 500 chars): Robi Axiata PLC, Banglalink Digital Communications Limited, Nagad Limited, HalalBari, Popular Diagnostic Centre Limited, Samitivej Hospital Bangladesh
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 7598.65it/s]
+Loaded checkpoint: 8 classes, max_len 64, device mps
+[ 11] BASIC Bank PLC: 63 sentences classified
+[ 12] BRAC Bank PLC: 61 sentences classified
+[ 13] Bank Asia PLC: 112 sentences classified
+[ 15] Mutual Trust Bank PLC: 98 sentences classified
+[ 16] Eastern Bank PLC: 502 sentences classified
+[ 17] State Bank of India - Bangladesh Operations: 56 sentences classified
+[ 18] HSBC Bangladesh: 217 sentences classified
+[  1] Grameenphone Limited: 40 sentences classified
+[  8] bKash Limited: 81 sentences classified
+[ 10] UCB Fintech Company Limited - upay: 84 sentences classified
+[ 23] Pickaboo - Silver Water Technologies Bangladesh Limited: 110 sentences classified
+[ 25] Othoba.com: 241 sentences classified
+[ 36] AYESH: 48 sentences classified
+[ 24] Daraz Bangladesh Limited: 248 sentences classified
+[ 38] Koleer Bangladesh: 35 sentences classified
+[ 42] Kallol Limited - Titan Watches Bangladesh: 31 sentences classified
+[ 48] Fiza & Co. Private Limited: 41 sentences classified
+[ 61] My Lab Medical and Diagnostic Centre Private Limited: 126 sentences classified
+[ 65] Gazaria Popular Hospital and Diagnostic Centre: 90 sentences classified
+[ 64] Hospice Bangladesh: 127 sentences classified
+[ 66] AMAR Home Drug Addiction Treatment Center: 169 sentences classified
+[ 97] Prothom Alo: 108 sentences classified
+[ 98] Daily Sun: 124 sentences classified
+[ 99] New Age: 112 sentences classified
+[  6] Bangladesh Export Import Company Limited - IT Division: 123 sentences classified
+[ 89] Nhimex Software: 73 sentences classified
+
+Wrote 3120 sentence-level predictions -> /Users/nafizahmed/Library/CloudStorage/GoogleDrive-nafizahmednafi@gmail.com/Other computers/My Computer/BRACU Books and Classnotes/3rd year/9th sem/cse440/project/bd_external_validation/data/bd_sentence_predictions.csv
+
+Category distribution: BD (predicted) vs OPP-115 (ground truth)
+
+                            category  opp115_pct  bd_predicted_pct  gap_pct_points  bd_mean_confidence
+      Third Party Sharing/Collection       27.76             21.70           -6.06              0.7252
+                 User Choice/Control        9.66              4.87           -4.79              0.5498
+      User Access, Edit and Deletion        3.97              2.60           -1.37              0.6734
+International and Specific Audiences        3.05              2.63           -0.42              0.6397
+                       Policy Change        2.63              4.39            1.76              0.8102
+          First Party Collection/Use       46.97             48.78            1.81              0.7227
+                      Data Retention        1.93              4.10            2.17              0.6117
+                       Data Security        4.03             10.93            6.90              0.7405
+
+Wrote /Users/nafizahmed/Library/CloudStorage/GoogleDrive-nafizahmednafi@gmail.com/Other computers/My Computer/BRACU Books and Classnotes/3rd year/9th sem/cse440/project/bd_external_validation/data/bd_vs_opp115_category_comparison.csv
+
+Overall mean prediction confidence on BD text: 0.7126

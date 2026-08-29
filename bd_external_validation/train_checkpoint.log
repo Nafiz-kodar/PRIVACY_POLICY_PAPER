@@ -1,0 +1,32 @@
+Device: mps
+policy scheme -- BERT Base, max_len 64, train 11134 / val 2298 / test 3911
+
+Configuration 1: {'lr': 2e-05, 'batch_size': 16}
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7785.70it/s]
+      epoch  1  val macro-F1 0.5850  acc 0.6780  *
+      epoch  2  val macro-F1 0.6548  acc 0.7023  *
+      epoch  3  val macro-F1 0.6885  acc 0.7315  *
+Validation Macro F1: 0.6885  (384.2s)
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00,  1.90it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00,  1.89it/s]
+  -> new best, checkpoint saved to /Users/nafizahmed/Library/CloudStorage/GoogleDrive-nafizahmednafi@gmail.com/Other computers/My Computer/BRACU Books and Classnotes/3rd year/9th sem/cse440/project/models/bert_policy_checkpoint
+
+Configuration 2: {'lr': 3e-05, 'batch_size': 32}
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 5861.50it/s]
+      epoch  1  val macro-F1 0.5772  acc 0.6767  *
+      epoch  2  val macro-F1 0.6669  acc 0.7058  *
+      epoch  3  val macro-F1 0.6703  acc 0.7124  *
+Validation Macro F1: 0.6703  (401.3s)
+
+Configuration 3: {'lr': 5e-05, 'batch_size': 16, 'class_weight': 'balanced'}
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7021.62it/s]
+      epoch  1  val macro-F1 0.5808  acc 0.5914  *
+      epoch  2  val macro-F1 0.6491  acc 0.6558  *
+      epoch  3  val macro-F1 0.6293  acc 0.6218
+Validation Macro F1: 0.6491  (428.9s)
+
+Best config: {'lr': 2e-05, 'batch_size': 16}
+Validation Macro F1: 0.6885
+Test Macro F1      : 0.6914
+Test Accuracy      : 0.7116
+
+Checkpoint at /Users/nafizahmed/Library/CloudStorage/GoogleDrive-nafizahmednafi@gmail.com/Other computers/My Computer/BRACU Books and Classnotes/3rd year/9th sem/cse440/project/models/bert_policy_checkpoint (already saved after the winning config).
