@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+.vercel/
+*.log
+.env*.local
+
+# Intermediate fp32 PyTorch checkpoint from code/train_deploy_model.py — an
+# export input, not something the deployed app reads. ~420MB, well over
+# GitHub's 100MB per-file limit. The app only needs models/bert-privacy-policy/
+# (the quantized ONNX export), which IS tracked.
+model_raw/

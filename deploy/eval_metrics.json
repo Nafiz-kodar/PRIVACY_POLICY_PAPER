@@ -1,0 +1,35 @@
+{
+  "scheme": "policy",
+  "config": {
+    "lr": 2e-05,
+    "batch_size": 16
+  },
+  "val_macro_f1": 0.682589825234026,
+  "test_accuracy": 0.715929429813347,
+  "test_macro_f1": 0.6986802961736638,
+  "test_weighted_f1": 0.711203650054802,
+  "per_class_f1": {
+    "Data Retention": 0.4935064935064935,
+    "Data Security": 0.8478964401294499,
+    "First Party Collection/Use": 0.7711533454829471,
+    "International and Specific Audiences": 0.8983050847457628,
+    "Policy Change": 0.8131868131868132,
+    "Third Party Sharing/Collection": 0.6522522522522523,
+    "User Access, Edit and Deletion": 0.5625,
+    "User Choice/Control": 0.550641940085592
+  },
+  "labels": [
+    "Data Retention",
+    "Data Security",
+    "First Party Collection/Use",
+    "International and Specific Audiences",
+    "Policy Change",
+    "Third Party Sharing/Collection",
+    "User Access, Edit and Deletion",
+    "User Choice/Control"
+  ],
+  "reference": {
+    "test_accuracy": 0.7116,
+    "test_macro_f1": 0.6914
+  }
+}

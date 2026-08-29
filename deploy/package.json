@@ -1,0 +1,28 @@
+{
+  "name": "privacy-policy-classifier",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CSE440 bonus deployment — BERT Base privacy-policy clause classifier, served via transformers.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^4.0.1",
+    "next": "^15.5.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "typescript": "^5.7.0"
+  },
+  "allowScripts": {
+    "onnxruntime-node@1.24.3": true,
+    "protobufjs@7.6.6": true,
+    "sharp@0.34.5": true
+  }
+}
