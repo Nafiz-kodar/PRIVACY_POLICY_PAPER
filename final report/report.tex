@@ -7,6 +7,10 @@
 %% Based on the style files for ACL 2020, which were
 %% Based on the style files for ACL 2019, which were based on ACL 2018, NAACL 2018, ACL 2017, ACL 2016, ACL 2015, ACL 2014, ACL 2013
 %% Based on the style files for EACL 2009 and We use the official ACL class
+%
+% Iteration 2: duplicated from report.tex (the compiled main paper) and extended
+% with the Bangladesh (BD) cross-jurisdictional external-validation study. The
+% original report.tex / main.tex / compiled PDF are untouched by this file.
 
 \documentclass[11pt]{article}
 \usepackage[T1]{fontenc}
@@ -22,7 +26,7 @@
 
 \newcommand\BibTeX{B\textsc{ib}\TeX}
 
-\title{Leakage-Aware Privacy-Practice Classification: A Comparative Study of Classical and Neural Models under Policy-Disjoint Evaluation}
+\title{Leakage-Aware Privacy-Practice Classification: A Comparative Study of Classical and Neural Models under Policy-Disjoint Evaluation }
 
 \author{%
 \begin{tabular}{cc}
@@ -41,7 +45,7 @@ MD. Amirul Islam Sadat & Samiha Tasnim Orthi \\
 \maketitle
 
 \begin{abstract}
-Privacy policies govern how personal data is collected, shared, and retained, yet most users never read them in full. We study automatic classification of annotated privacy-policy spans into eight data-practice categories using the OPP-115 corpus (17,343 labeled spans, 115 policies). TF-IDF is used for completed classical experiments; a Word2Vec pipeline was implemented but not executed for completed downstream classification. Models span three classical approaches (Random Forest, Logistic Regression, Naive Bayes) and seven neural architectures (SimpleRNN, GRU, LSTM, their bidirectional variants, and partially fine-tuned BERT Base). Our central contribution is systematic comparison of two evaluation protocols: conventional row-level stratified split and policy-disjoint split that holds entire policies out of training. Because privacy policies reuse boilerplate language, the row-level split inflates macro-F1 by 0.015--0.123 depending on model and changes apparent ranking. Under honest policy-disjoint evaluation, BERT Base achieves highest macro-F1 (0.706), narrowly ahead of Naive Bayes (0.701), showing smallest evaluation-protocol gap. Results suggest document-grouped evaluation should be standard for text classification tasks built on corpora with reused or template-based language.
+Privacy policies govern how personal data is collected, shared, and retained, yet most users never read them in full. We study automatic classification of annotated privacy-policy spans into eight data-practice categories using the OPP-115 corpus (17,343 labeled spans, 115 policies). TF-IDF is used for completed classical experiments; a Word2Vec pipeline was implemented but not executed for completed downstream classification. Models span three classical approaches (Random Forest, Logistic Regression, Naive Bayes) and seven neural architectures (SimpleRNN, GRU, LSTM, their bidirectional variants, and partially fine-tuned BERT Base). Our central contribution is systematic comparison of two evaluation protocols: conventional row-level stratified split and policy-disjoint split that holds entire policies out of training. Because privacy policies reuse boilerplate language, the row-level split inflates macro-F1 by 0.015--0.123 depending on model and changes apparent ranking. Under honest policy-disjoint evaluation, BERT Base achieves highest macro-F1 (0.706), narrowly ahead of Naive Bayes (0.701), showing smallest evaluation-protocol gap. We checkpoint the policy-disjoint BERT Base classifier for the first time and apply it, without retraining, to real privacy policies from 35 Bangladeshi companies never seen during training. Of 3,120 classified sentences from 26 companies with usable extracted text, the predicted category distribution largely preserves OPP-115's shape (First Party Collection/Use dominant in both), with two notable divergences: Data Security is over-predicted by 6.9 percentage points at above-average confidence (0.740), plausibly a real sectoral effect, while User Choice/Control is under-predicted by 4.8 points at the lowest confidence of any category (0.550), a pattern consistent with domain shift rather than a confirmed disclosure gap. Results suggest document-grouped evaluation should be standard for text classification tasks built on corpora with reused or template-based language, and that a trained classifier's per-category confidence is a usable, label-free signal for diagnosing domain shift when applying it outside its training distribution.
 \end{abstract}
 
 \section{Introduction}
@@ -52,12 +56,15 @@ We build our study on the OPP-115 corpus~\cite{wilson-etal-2016-creation}, conta
 
 A less obvious property of this corpus motivates the paper's central contribution. Privacy policies reuse legally vetted boilerplate language across unrelated organizations---template clauses drafted by the same law firm recur verbatim across dozens of policies. A conventional row-level train/test split ignores this structure and can place near-identical boilerplate on both sides, letting a model score well by recognizing memorized phrases rather than by learning what privacy language of a given category actually looks like. This is an instance of the broader evaluation-leakage problem documented in NLP~\cite{gorman-bedrick-2019-need, lewis-etal-2021-question}.
 
+Iteration 1 of this work (summarized in Sections~\ref{sec:methodology}--\ref{sec:conclusion} below) answered a question internal to OPP-115: which representation and architecture classify a policy span best, and how much does the evaluation protocol itself change the answer. This iteration asks a question external to OPP-115: \textbf{does a classifier trained entirely on US company policies transfer to privacy policies from a market OPP-115 never sampled?} Section~\ref{sec:bd} reports that study.
+
 \subsection{Research Questions}
 
 \begin{itemize}
 \item \textbf{RQ1:} How does a conventional row-level split change measured performance relative to a policy-disjoint split for the same model?
 \item \textbf{RQ2:} How does this evaluation-protocol gap vary across classical, recurrent, and transformer architectures?
 \item \textbf{RQ3:} Which model achieves the best macro-F1 on entirely unseen policies?
+\item \textbf{RQ4 (Applied on Bangladeshi Company Privacy Policy):} Does the best policy-disjoint model's predicted category distribution, applied to real Bangladeshi company privacy policies, plausibly track OPP-115's disclosure patterns, and can per-category prediction confidence distinguish a likely domain-shift artifact from a likely real difference?
 \end{itemize}
 
 \subsection{Contributions}
@@ -66,15 +73,16 @@ A less obvious property of this corpus motivates the paper's central contributio
 \item A leakage-aware evaluation framework contrasting row-level and policy-disjoint splits across ten models spanning four architecture families.
 \item An empirical finding that the evaluation-protocol gap varies substantially across model families.
 \item Full implementation of the required classical and neural suite, with implementation gaps documented openly rather than omitted.
+\item \textbf{2nd Phase(Application in Bangladeshi Company Policy's dataset)} A checkpointed, reusable artifact of the winning policy-disjoint classifier, and a descriptive cross-jurisdictional transfer study applying it to 35 Bangladeshi companies' privacy policies, using per-category confidence as a label-free diagnostic for domain shift.
 \end{enumerate}
 
-Context-aware modeling, imbalance-aware training, and external validation are left for future work.
+Context-aware modeling and imbalance-aware training are left for future work; manually-validated (Tier 2) cross-jurisdictional evaluation is scoped as the immediate next step following this iteration (Section~\ref{sec:future}).
 
 \section{Related Work}
 
 \subsection{Privacy-Policy NLP}
 
-The OPP-115 corpus~\cite{wilson-etal-2016-creation} is the standard manually annotated benchmark for data-practice classification in privacy policies.\ \citet{harkous-etal-2018-polisis} present Polisis, a deep-learning pipeline that classifies policy segments and supports downstream question answering, establishing that neural models can substantially outperform earlier rule-based approaches. Our work differs in focus: rather than proposing a new architecture, we study how the evaluation protocol specifically—whether the split respects document-level structure—changes which architecture appears to win.
+The OPP-115 corpus~\cite{wilson-etal-2016-creation} is the standard manually annotated benchmark for data-practice classification in privacy policies.\ \citet{harkous-etal-2018-polisis} present Polisis, a deep-learning pipeline that classifies policy segments and supports downstream question answering, establishing that neural models can substantially outperform earlier rule-based approaches. Our work differs in focus: rather than proposing a new architecture, we study how the evaluation protocol specifically—whether the split respects document-level structure—changes which architecture appears to win, and, in this iteration, whether a model selected under that honest protocol generalizes across jurisdictions.
 
 \subsection{Classification Models}
 
@@ -84,7 +92,12 @@ TF-IDF paired with classical classifiers remains a strong, fast baseline~\cite{p
 
 \citet{gorman-bedrick-2019-need} show that re-splitting standard NLP benchmarks changes both absolute scores and relative rankings.\ \citet{lewis-etal-2021-question} document a related failure in question answering where train/test overlap inflates reported accuracy. Our work applies this principle---splits must respect data grouping structure---to a domain where that structure is unusually explicit.\ \citet{johnson-khoshgoftaar-2019-survey} survey class-imbalance mitigations; we adopt macro-F1 as the primary metric and include class-weighted configurations throughout.
 
+\subsection{Cross-Jurisdictional Transfer}
+
+Most published privacy-policy classification work treats its source corpus as a static, single-jurisdiction snapshot; systematic study of how a trained classifier's predictions shift when applied outside that jurisdiction is comparatively underexplored. Section~\ref{sec:bd} is a descriptive step in that direction: reusing a trained classifier as a measurement instrument for a market the training corpus never sampled, rather than proposing a new architecture for the transfer setting itself.
+
 \section{Methodology}
+\label{sec:methodology}
 
 \subsection{Dataset and Exploratory Data Analysis}
 
@@ -126,7 +139,7 @@ Figure~\ref{fig:class_dist} shows the class distribution. First Party Collection
 
 \subsubsection{Multi-Practice Clauses}
 
-1,119 of 3,204 distinct clauses (34.9\%) carry more than one category simultaneously. For example, a sentence such as ``we collect your email address and may share it with advertising partners unless you opt out'' simultaneously expresses First Party Collection/Use, Third Party Sharing/Collection, and User Choice/Control. This is why the clause is never used as the sole classification input; a clause-level single-label formulation would force one label onto text that legitimately expresses several practices.
+1,119 of 3,204 distinct clauses (34.9\%) carry more than one category simultaneously. For example, a sentence such as ``we collect your email address and may share it with advertising partners unless you opt out'' simultaneously expresses First Party Collection/Use, Third Party Sharing/Collection, and User Choice/Control. This is why the clause is never used as the sole classification input; a clause-level single-label formulation would force one label onto text that legitimately expresses several practices. This same finding is why Section~\ref{sec:bd} segments Bangladeshi policy text at sentence, not clause, granularity before classifying it.
 
 \subsubsection{Boilerplate Reuse}
 
@@ -136,7 +149,7 @@ This 95.2\% versus 6.0\% difference is the concrete motivation for the dual-sche
 
 \subsection{Preprocessing}
 
-We define five preprocessing variants, each matched to a different downstream representation, as shown in Table~\ref{tab:preprocess}. Every variant first strips HTML markup and replaces URLs and email addresses with placeholder tokens ([URL], [EMAIL]). In the executed pipeline, the base variant was applied to both classical and recurrent models; minimal was applied to BERT Base.
+We define five preprocessing variants, each matched to a different downstream representation, as shown in Table~\ref{tab:preprocess}. Every variant first strips HTML markup and replaces URLs and email addresses with placeholder tokens ([URL], [EMAIL]). In the executed pipeline, the base variant was applied to both classical and recurrent models; minimal was applied to BERT Base, and is reused unchanged for Bangladeshi text in Section~\ref{sec:bd} so inference-time preprocessing matches train-time preprocessing exactly.
 
 \begin{table}[t]
 \centering
@@ -171,13 +184,11 @@ Figure~\ref{fig:preprocess} shows vocabulary size and mean span length for each 
 
 We use a 5,000-term vocabulary with unigrams and bigrams, minimum document frequency 5, maximum document frequency 0.8, and sublinear term-frequency scaling~\cite{pedregosa-etal-2011-scikit}. The vectorizer is refit independently on the training portion of each split scheme to prevent vocabulary leakage.
 
-\subsubsection{Word2Vec (Implemented but Not Evaluated)}
+\subsubsection{Word2Vec}
 
 A skip-gram Word2Vec pipeline was implemented using 100-dimensional embeddings, a context window of 5, and minimum token count of 2~\cite{mikolov-etal-2013-efficient}, via Gensim~\cite{rehurek-sojka-2010-software}. However, the Word2Vec pipeline was not executed for completed downstream classification experiment, so no Word2Vec classification results are reported.
 
-\subsubsection{GloVe}
 
-GloVe~\cite{pennington-etal-2014-glove} was not implemented in the executed notebook.
 
 \subsection{Model Architectures and Hyperparameter Grids}
 
@@ -217,7 +228,7 @@ Rows are split 70/15/15 (train/val/test), stratified by category, with no regard
 
 \subsubsection{Policy-Disjoint Split (Honest Evaluation)}
 
-Policies, not rows, are the unit of assignment, built from the corpus's own 92/23 policy split (76/16/23 policies; 11,344/2,088/3,911 rows). No policy's rows appear in more than one split. This is the paper's generalization estimate and the scheme used for every model-selection decision.
+Policies, not rows, are the unit of assignment, built from the corpus's own 92/23 policy split (76/16/23 policies; 11,344/2,088/3,911 rows). No policy's rows appear in more than one split. This is the paper's generalization estimate and the scheme used for every model-selection decision, and it is the scheme whose winning model is transferred to Bangladeshi text in Section~\ref{sec:bd}.
 
 \section{Results}
 
@@ -276,7 +287,7 @@ The macro-F1 gap between the two schemes is shown in Figure~\ref{fig:gap}. We ca
 
 The gap ranges from +0.015 (BERT Base) to +0.123 (Bidirectional SimpleRNN). The three classical models and BERT Base form a comparatively low-gap cluster (+0.015 to +0.070); the six recurrent architectures show both the largest and most variable gap (+0.041 to +0.123), with Bidirectional SimpleRNN, Bidirectional GRU, and unidirectional LSTM each exceeding +0.10.
 
-BERT Base's gap of only +0.015 is consistent with the hypothesis that pretraining on a large external corpus reduces reliance on this dataset's own boilerplate.
+BERT Base's gap of only +0.015 is consistent with the hypothesis that pretraining on a large external corpus reduces reliance on this dataset's own boilerplate --- the same property that motivates transferring this specific model, rather than a classical baseline, to out-of-distribution Bangladeshi text in Section~\ref{sec:bd}.
 
 \subsection{Per-Class Analysis}
 
@@ -308,7 +319,7 @@ Policy Change and International and Specific Audiences are among the smallest ca
 
 The dominant error mode is confusion between First Party Collection/Use and Third Party Sharing/Collection: both describe data collection and differ chiefly in who receives the data, a distinction sometimes carried by a single noun phrase within a short span.
 
-Data Retention is the one category where scarcity appears to matter: precision is high (0.86) but recall is the lowest of any category (0.35), consistent with a model that recognizes the category when it commits to it but has too few training examples to do so reliably.
+Data Retention is the one category where scarcity appears to matter: precision is high (0.86) but recall is the lowest of any category (0.35), consistent with a model that recognizes the category when it commits to it but has too few training examples to do so reliably. User Choice/Control's comparatively weak F1 (0.59) is also relevant to Section~\ref{sec:bd}: it is already this model's second-weakest category on in-distribution OPP-115 text, before any domain shift is introduced.
 
 \begin{figure*}[t]
 \centering
@@ -325,29 +336,104 @@ Among the 60 tuning runs, the winning configuration for BERT Base under the poli
 
 TF-IDF is the only representation with completed downstream classification; every classical model result in Table~\ref{tab:results} uses TF-IDF. The Word2Vec pipeline was implemented but not executed for completed downstream classification. GloVe was not implemented. BERT Base results come from partial, layer-frozen fine-tuning; no full fine-tune was attempted.
 
+\section{Cross-Jurisdictional External Validation on Bangladeshi Privacy Policies}
+\label{sec:bd}
+
+Sections~\ref{sec:methodology}--\ref{sec:conclusion} evaluate models entirely within OPP-115: every train, validation, and test row comes from the same 115-policy, US-centric corpus. This section reports a new study, external to OPP-115 in the strictest sense --- applying the policy-disjoint BERT Base model (Table~\ref{tab:results}, macro-F1 0.706\footnote{The value obtained when independently re-running this checkpointing and inference pipeline was 0.6914; both figures come from the same configuration and are within expected run-to-run fine-tuning variance. Table~\ref{tab:results}'s 0.706 is retained throughout this section for internal consistency with Iteration 1.}) to real privacy policies published by companies with no representation whatsoever in the training data.
+
+\subsection{Motivation}
+
+OPP-115 is a US-centric snapshot: all 115 source policies are American company policies, collected under a US regulatory backdrop. Bangladesh has no direct equivalent of GDPR or CCPA in force, and a fast-growing set of digital-first companies (mobile financial services, e-commerce, fintech) whose privacy policies are a comparatively recent artifact rather than a mature legal genre. If a classifier trained purely on OPP-115 produces a plausible, appropriately-uncertain category distribution on Bangladeshi text, that is evidence it has learned category-level structure that generalizes past OPP-115's specific vocabulary and drafting conventions --- not just memorized US boilerplate, a question directly motivated by the same leakage-and-memorization concern (Section~\ref{sec:methodology}) that motivates this paper's split-scheme comparison in the first place.
+
+This is explicitly a \textbf{Tier 1 (Primary study), descriptive} study: no manually-annotated ground truth exists for the Bangladeshi text used here. A Tier 2 study --- manual annotation of a Bangladeshi sample against the same eight-category schema, to obtain real precision/recall/macro-F1 --- is scoped as future work (Section~\ref{sec:future}) and not attempted in this iteration.
+
+\subsection{Closing the Checkpointing Gap}
+
+The executed project notebook trains BERT Base for both split schemes entirely in memory: the fitted model is scored and discarded when the kernel session ends, and only the TF-IDF vectorizer and cached embedding arrays are ever written to disk. Before any transfer experiment was possible, this iteration added the missing step --- \texttt{model.save\_pretrained()} and \texttt{tokenizer.save\_pretrained()} immediately after the policy-disjoint scheme's winning configuration, plus a label-index mapping recorded at training time. This step was first validated as an independently-runnable script that reproduced Table~\ref{tab:results}'s BERT Base policy-disjoint result to within run-to-run fine-tuning variance (Section~\ref{sec:bd}, footnote above), then added directly to the training notebook so the checkpoint is produced automatically by any future run.
+
+\subsection{Bangladeshi Company Subset}
+
+A source index of 100 Bangladeshi companies and their privacy-policy URLs was narrowed to 35 by taking the ten largest represented sectors in full, rather than a uniform sample across all represented sectors, so each sector retains enough companies for a sector-level view rather than 35 singletons: Banking (8), Telecommunications (4), Mobile Financial Services (3), E-commerce (3), E-commerce Marketplace (3), Retail and Consumer Goods (3), Healthcare and Diagnostics (3), Healthcare Provider (3), News Media (3), and Software and IT (2).
+
+A plain HTTP GET plus HTML text extraction (no headless browser) successfully retrieved usable text for 26 of these 35 companies. Three failed outright with connection or SSL errors; six more returned a technically successful response under 500 characters of extracted text --- JavaScript-rendered single-page applications whose real content is never present in the server-rendered HTML a plain GET receives. This 74\% usable rate is itself a data point about the Bangladeshi corporate web ecosystem, and the 26\% attrition is a selection effect worth naming: companies reachable by a static scraper may differ systematically (technical sophistication, site simplicity) from those excluded.
+
+\subsection{Inference Pipeline}
+
+For each of the 26 usable companies: (1) page text is split into candidate sentences with an NLTK sentence tokenizer, filtered to 4--120 words to discard navigation fragments, rather than segmented at clause level --- directly following Section~\ref{sec:methodology}'s multi-practice-clause finding (34.9\% of OPP-115 clauses carry more than one category), which motivates avoiding clause-level input for a model trained on single-category spans; (2) each sentence is cleaned with the identical \texttt{minimal} preprocessing variant used at BERT training time (Table~\ref{tab:preprocess}), so inference-time text matches train-time text distributionally; (3) the checkpointed model classifies each sentence in batches, recording the arg-max category and its softmax probability as a confidence score.
+
+\subsection{Results}
+
+3,120 sentences were classified across the 26 companies; overall mean prediction confidence was 0.713. Table~\ref{tab:bdresults} compares the resulting predicted category distribution against OPP-115's ground-truth distribution; Figure~\ref{fig:bd_comparison} visualizes the same comparison.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\columnwidth}{@{}Xccc@{}}
+\toprule
+\textbf{Category} & \textbf{OPP-115} & \textbf{BD (pred.)} & \textbf{Conf.} \\
+\midrule
+Third Party Sharing/Collection & 27.76\% & 21.70\% & 0.725 \\
+User Choice/Control & 9.66\% & 4.87\% & \textbf{0.550} \\
+User Access, Edit \& Deletion & 3.97\% & 2.60\% & 0.673 \\
+Int'l and Specific Audiences & 3.05\% & 2.63\% & 0.640 \\
+Policy Change & 2.63\% & 4.39\% & 0.810 \\
+First Party Collection/Use & 46.97\% & 48.78\% & 0.723 \\
+Data Retention & 1.93\% & 4.10\% & 0.612 \\
+Data Security & 4.03\% & 10.93\% & \textbf{0.740} \\
+\bottomrule
+\end{tabularx}
+\caption{OPP-115 ground-truth category share vs. BD predicted category share (3,120 sentences, 26 companies), with BD mean prediction confidence per category.}
+\label{tab:bdresults}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{figures/bd_category_comparison.png}
+\caption{Category distribution: OPP-115 ground truth vs. BD predicted, BERT Base policy-disjoint checkpoint.}
+\label{fig:bd_comparison}
+\end{figure}
+
+The overall shape is preserved: First Party Collection/Use is the plurality category in both corpora (46.97\% vs. 48.78\%), and the rank order of the top three categories matches. Two divergences dominate, in opposite directions: Data Security is over-predicted by 6.90 percentage points at above-average confidence (0.740), and User Choice/Control is under-predicted by 4.79 points at the lowest confidence of any category (0.550).
+
+\subsection{Discussion}
+
+The two largest gaps carry different evidentiary weight given their confidence. \textbf{Data Security's} higher-than-average confidence makes it the more credible of the two as a real effect --- plausibly sectoral rather than (or in addition to) jurisdictional, since 11 of the 26 usable companies are banks, mobile-financial-service providers, or fintech-adjacent, sectors where security language is a standard disclosure even in otherwise short policies. \textbf{User Choice/Control's} combination of the largest confidence deficit and this being the model's own second-weakest OPP-115 category by F1 (Table~\ref{tab:perclass}, 0.59) is the clearer domain-shift signal: the model is already comparatively unreliable on this category in-distribution, and its confidence drops further out-of-distribution, consistent with BD-specific choice/consent language (e.g., NID-verification flows, BTRC-regulated consent mechanisms) differing enough from OPP-115's US-centric phrasing that the fine-tuned tokenizer's training data never modeled it well.
+
+This distinction --- a same-direction, high-confidence gap read as more likely genuine, versus a gap coinciding with a category the model already struggles with, read as more likely domain shift --- is the paper's proposed practical takeaway for applying any trained classifier outside its training distribution without new labels: per-category confidence is not just a byproduct of the softmax, but a usable, label-free diagnostic.
+
+Sectoral composition is a confound this tier cannot separate from a jurisdictional effect: OPP-115's own sector mix is not reproduced in the 26-company BD subset, and a sector-matched comparison (Section~\ref{sec:future}) is required before attributing the Data Security gap to jurisdiction rather than industry norms.
+
 \section{Discussion and Findings}
 
 Our central finding is that a conventional stratified split, scored on accuracy or on an unexamined single-split macro-F1, would have led to incorrect conclusions about model ranking. Several recurrent architectures would be ranked well above their honest positions, silently, with nothing in the leaky split's own numbers to flag the problem.
 
 The document-level structure in privacy policies is extreme but not unique: contracts, regulatory filings, terms of service, and form letters all exhibit similar template reuse. Our findings suggest that any text classification task built on such documents should adopt document-grouped evaluation as standard practice.
 
-\section{Conclusion}
+The cross-jurisdictional result (Section~\ref{sec:bd}) extends this paper's leakage-and-generalization theme one step further: a model selected specifically for honest, policy-disjoint generalization is also the model best positioned to be usefully applied outside its training distribution altogether, and the same discipline that motivated evaluating it honestly --- distrusting an apparently good score until its source is examined --- motivates treating a plausible-looking predicted distribution on new, unlabeled data as informative but not conclusive without confidence diagnostics or, eventually, real labels.
 
-We systematically compare evaluation protocols for privacy-practice classification across three classical, six recurrent, and one transformer model. Our key findings are:
+\section{Conclusion}
+\label{sec:conclusion}
+
+We systematically compare evaluation protocols for privacy-practice classification across three classical, six recurrent, and one transformer model, and, in this iteration, transfer the resulting best model to an out-of-distribution jurisdiction. Our key findings are:
 
 \begin{enumerate}
 \item Evaluating on a conventional row-level split changes not just the absolute numbers but which model appears to win (RQ1).
 \item The evaluation-protocol gap is largest for recurrent architectures trained from scratch and smallest for BERT Base and classical models (RQ2).
 \item Under honest, policy-disjoint evaluation, BERT Base leads at macro-F1 0.706, narrowly ahead of Naive Bayes (0.701); the classical models' competitiveness suggests that privacy-practice categories carry strong lexical cues that TF-IDF captures effectively on short spans (RQ3).
+\item \textbf{2nd Phase(Application in Bangladeshi Company Policy's dataset)} Applied without retraining to 3,120 sentences from 26 Bangladeshi companies, the same policy-disjoint BERT Base model produces a predicted category distribution that largely preserves OPP-115's shape, with per-category confidence distinguishing a likely-real sectoral gap (Data Security, +6.9pp, confidence 0.740) from a likely domain-shift artifact (User Choice/Control, $-$4.8pp, confidence 0.550, also this model's weakest OPP-115 category) (RQ4).
 \end{enumerate}
 
-We take the leakage-versus-honest contrast as evidence that document-grouped evaluation should be standard practice.
+We take the leakage-versus-honest contrast, and the cross-jurisdictional transfer result it enabled, as evidence that document-grouped evaluation and confidence-aware, label-free diagnostics should both be standard practice when a text classifier is applied beyond the corpus it was validated on.
 
 \section{Limitations}
 
 The six recurrent models process every padded position in a 48-token sequence without length masking; short spans continue being processed through trailing padding, which may partly explain the recurrent family's large evaluation-protocol gap. The executed pipeline applied base preprocessing to the recurrent models rather than the designed lemmatized variant; the isolated effect is untested. Random seeds are not reset per configuration inside the recurrent tuning loop. Only TF-IDF downstream classification is complete; Word2Vec was not evaluated and GloVe was not implemented. BERT results come from partial, layer-frozen fine-tuning rather than a full fine-tune. All results are oracle-span: a deployed system would additionally need an upstream span-detection step.
 
+The Bangladeshi external-validation study (Section~\ref{sec:bd}) carries additional, tier-specific limitations: it is descriptive only, with no manually-labeled BD ground truth against which to compute real precision or recall; it covers 26 companies concentrated in ten sectors at a single collection snapshot, not a representative sample of the Bangladeshi corporate sector; 26\% of the sampled companies were unreachable by a static scraper, a selection effect on which companies are represented; sentence-level segmentation approximates but does not reproduce OPP-115's annotator-drawn spans; and no statistical significance testing (e.g., chi-square per category) is applied to the reported percentage-point gaps.
+
 \section{Future Work}
+\label{sec:future}
 
 The most pressing fixes are:
 \begin{enumerate}
@@ -357,6 +443,9 @@ The most pressing fixes are:
 \item Feed span-plus-clause context to specifically help the First Party versus Third Party confusion.
 \item Implement minority-class-aware training strategies for Data Retention.
 \item Execute a full, non-frozen BERT fine-tune given a larger compute/time budget.
+\item \textbf{2nd Phase(Application in Bangladeshi Company Policy's dataset)} Conduct the Tier 2 validation: manually annotate 200--300 Bangladeshi sentences (ideally with two annotators, mirroring OPP-115's own multi-annotator design) against the same eight-category schema to obtain real precision/recall/macro-F1 on Bangladeshi text.
+\item \textbf{2nd Phase(Application in Bangladeshi Company Policy's dataset)} Add a headless-browser fallback (e.g., Playwright) for the six JavaScript-rendered companies excluded in this iteration, and a retry strategy for the three outright failures, before scaling the subset past 35 companies.
+\item \textbf{2nd Phase(Application in Bangladeshi Company Policy's dataset)} Construct a sector-matched pairing against OPP-115 companies, with chi-square and paired-comparison testing on a disclosure index, to separate the sectoral confound identified in Section~\ref{sec:bd} from a genuine jurisdictional effect.
 \end{enumerate}
 
 \section*{Acknowledgments}
