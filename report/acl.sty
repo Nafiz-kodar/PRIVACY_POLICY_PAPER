@@ -58,7 +58,8 @@
 \def\subsubsection{\@startsection{subsubsection}{3}{\z@}{-1.5ex plus -0.5ex minus -.2ex}{0.5ex plus .2ex}{\normalsize\bfseries\raggedright}}
 \def\paragraph{\@startsection{paragraph}{4}{\z@}{1.5ex plus .5ex minus .2ex}{-1em}{\normalsize\bfseries}}
 
-\parindent 1em
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0pt}
 \topsep 4pt plus 1pt minus 2pt
 \partopsep 1pt plus .5pt minus .5pt
 \itemsep 2pt plus 1pt minus .5pt
@@ -83,5 +84,4 @@
 \makeatother
 
 \RequirePackage{hyperref}
-\definecolor{darkblue}{rgb}{0,0,0.5}
-\hypersetup{colorlinks=true,citecolor=darkblue,linkcolor=darkblue,urlcolor=darkblue}
+\hypersetup{colorlinks=true,citecolor=black,linkcolor=black,urlcolor=black}

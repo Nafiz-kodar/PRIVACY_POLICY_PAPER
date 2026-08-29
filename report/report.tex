@@ -96,8 +96,7 @@ We use the OPP-115 corpus~\cite{wilson-etal-2016-creation}: 115 website privacy 
 \item Third Party Sharing/Collection
 \item User Choice/Control
 \item Data Security
-\item User Access
-\item Edit and Deletion
+\item User Access, Edit and Deletion
 \item International and Specific Audiences
 \item Policy Change
 \item Data Retention
@@ -109,13 +108,20 @@ The working dataset contains 17,343 labeled spans from 3,204 distinct underlying
 
 \subsubsection{Class Distribution and Span Lengths}
 
-Figure~\ref{fig:class_dist} shows the class distribution and span/clause-length distributions. First Party Collection/Use and Third Party Sharing/Collection together account for 74.7\% of all rows, while Data Retention accounts for only 1.9\%---a 24.3$\times$ imbalance. This is why accuracy is never reported as a standalone metric; every evaluation centers macro-F1 and reports full per-class breakdowns. Span lengths are mostly short, with a long right tail (maximum 1,873 characters); this motivates the 48-token sequence-length cap used for recurrent models.
+Figure~\ref{fig:class_dist} shows the class distribution. First Party Collection/Use and Third Party Sharing/Collection together account for 74.7\% of all rows, while Data Retention accounts for only 1.9\%---a 24.3$\times$ imbalance. This is why accuracy is never reported as a standalone metric; every evaluation centers macro-F1 and reports full per-class breakdowns. Span lengths are mostly short, with a long right tail (maximum 1,873 characters); this motivates the 48-token sequence-length cap used for recurrent models, as shown in Figure~\ref{fig:span_length}.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\columnwidth]{figures/class_distribution.png}
-\caption{(a) Category distribution over 17,343 spans (24.3$\times$ largest/smallest ratio); (b) span length, clause length, and span length by category. Dashed lines mark the median.}
+\caption{Category distribution over 17,343 spans by (a) absolute count and (b) share of the corpus, highlighting the 24.3$\times$ ratio between the largest and smallest classes.}
 \label{fig:class_dist}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{figures/span_length.png}
+\caption{Span length, clause length, and span length by category, in words. Dashed lines mark the median (15 words for spans, 89 for clauses).}
+\label{fig:span_length}
 \end{figure}
 
 \subsubsection{Multi-Practice Clauses}
@@ -125,13 +131,6 @@ Figure~\ref{fig:class_dist} shows the class distribution and span/clause-length 
 \subsubsection{Boilerplate Reuse}
 
 Under the conventional row-level random split, 113 of 115 policies appear on both sides and 95.2\% of test rows share clause text with some training row. Under the policy-disjoint split, that figure drops to 6.0\%---real-world boilerplate reuse across unrelated organizations rather than an artifact of the split.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.95\columnwidth]{figures/leakage_inflation.png}
-\caption{Left: percentage of test rows sharing clause text with training, by split scheme. Right: test-set class composition under each scheme. The two schemes differ not only in overlap but also in which policies compose the test set.}
-\label{fig:leakage}
-\end{figure}
 
 This 95.2\% versus 6.0\% difference is the concrete motivation for the dual-scheme evaluation protocol.
 
@@ -201,7 +200,7 @@ Table~\ref{tab:models} summarizes all ten models, their representations, and the
  & Bidirectional GRU & Embedding & 3 \\
  & Bidirectional LSTM & Embedding & 3 \\
 \midrule
-Transformer & BERT Base & Frozen layers & 6 \\
+Transformer & BERT Base & Frozen layers & 3 \\
 \bottomrule
 \end{tabular}
 \caption{Model architectures and hyperparameter configurations (3 configs per model $\times$ 2 schemes = 60 configurations).}
@@ -237,16 +236,16 @@ Table~\ref{tab:results} reports test-set performance under both schemes. Figure~
  & \multicolumn{3}{c}{Random Split (Leaky)} & \multicolumn{3}{c}{Policy-Disjoint (Honest)} \\
 \textbf{Model} & Accuracy & Macro-F1 & Weighted-F1 & Accuracy & Macro-F1 & Weighted-F1 \\
 \midrule
-BERT Base & 0.759 & 0.721 & 0.755 & 0.715 & \textbf{0.706} & 0.704 \\
-Naive Bayes & 0.758 & 0.726 & 0.755 & 0.688 & \textbf{0.701} & 0.688 \\
-Logistic Regression & 0.774 & 0.753 & 0.771 & 0.691 & 0.692 & 0.690 \\
-Random Forest & 0.780 & 0.721 & 0.774 & 0.665 & 0.652 & 0.665 \\
-Bidirectional LSTM & 0.667 & 0.652 & 0.664 & 0.618 & 0.640 & 0.617 \\
-Bidirectional GRU & 0.606 & 0.600 & 0.605 & 0.561 & 0.599 & 0.561 \\
-LSTM & 0.612 & 0.597 & 0.609 & 0.567 & 0.591 & 0.567 \\
-GRU & 0.583 & 0.569 & 0.581 & 0.540 & 0.563 & 0.540 \\
-Bidirectional SimpleRNN & 0.269 & 0.257 & 0.268 & 0.159 & 0.134 & 0.158 \\
-SimpleRNN & 0.259 & 0.249 & 0.257 & 0.152 & 0.131 & 0.151 \\
+BERT Base & 0.759 & 0.721 & 0.755 & 0.715 & \textbf{0.706} & 0.714 \\
+Naive Bayes & 0.757 & 0.726 & 0.755 & 0.703 & \textbf{0.701} & 0.699 \\
+Logistic Regression & 0.774 & 0.753 & 0.771 & 0.679 & 0.692 & 0.677 \\
+Random Forest & 0.780 & 0.721 & 0.774 & 0.677 & 0.652 & 0.667 \\
+Bidirectional LSTM & 0.760 & 0.684 & 0.757 & 0.670 & 0.608 & 0.666 \\
+Bidirectional GRU & 0.764 & 0.700 & 0.761 & 0.633 & 0.586 & 0.634 \\
+Bidirectional SimpleRNN & 0.728 & 0.612 & 0.722 & 0.617 & 0.489 & 0.609 \\
+GRU & 0.711 & 0.519 & 0.704 & 0.585 & 0.475 & 0.583 \\
+LSTM & 0.691 & 0.549 & 0.683 & 0.579 & 0.442 & 0.576 \\
+SimpleRNN & 0.482 & 0.172 & 0.408 & 0.386 & 0.131 & 0.336 \\
 \bottomrule
 \end{tabular}
 \caption{Test performance at each model's best validated configuration under both split schemes, ranked by macro-F1 under policy-disjoint evaluation.}
@@ -268,7 +267,7 @@ Under the leaky random scheme, the picture looks quite different: Logistic Regre
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.95\columnwidth]{figures/span_length.png}
+\includegraphics[width=0.95\columnwidth]{figures/leakage_inflation.png}
 \caption{Evaluation-protocol macro-F1 gap (random-split score minus policy-disjoint score) by model; larger bars indicate models whose apparent performance depends more heavily on signal not available under honest evaluation.}
 \label{fig:gap}
 \end{figure}
@@ -289,15 +288,14 @@ BERT Base's gap of only +0.015 is consistent with the hypothesis that pretrainin
 \toprule
 \textbf{Category} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\
 \midrule
-First Party Collection/Use & 0.82 & 0.73 & 0.77 \\
-Third Party Sharing/Collection & 0.73 & 0.58 & 0.65 \\
-User Choice/Control & 0.76 & 0.67 & 0.71 \\
-Data Security & 0.68 & 0.62 & 0.65 \\
-User Access & 0.88 & 0.74 & 0.80 \\
-Edit and Deletion & 0.79 & 0.69 & 0.74 \\
-International and Specific Audiences & 0.91 & 0.85 & 0.88 \\
-Policy Change & 0.93 & 0.84 & 0.88 \\
-Data Retention & 0.86 & 0.35 & 0.50 \\
+First Party Collection/Use & 0.76 & 0.78 & 0.77 \\
+Third Party Sharing/Collection & 0.66 & 0.64 & 0.65 \\
+User Choice/Control & 0.56 & 0.62 & 0.59 \\
+Data Security & 0.77 & 0.88 & 0.82 \\
+User Access, Edit and Deletion & 0.69 & 0.57 & 0.62 \\
+International and Specific Audiences & 0.86 & 0.88 & 0.87 \\
+Policy Change & 0.91 & 0.77 & 0.84 \\
+Data Retention & 0.86 & 0.35 & 0.49 \\
 \bottomrule
 \end{tabularx}
 \caption{Per-class P/R/F1 for BERT Base (policy-disjoint; accuracy 0.715, macro-F1 0.706).}
@@ -306,7 +304,7 @@ Data Retention & 0.86 & 0.35 & 0.50 \\
 
 Table~\ref{tab:perclass} reports per-class results for BERT Base under the policy-disjoint test set. The per-class results show no clear relationship between class frequency and classification performance: several relatively small categories achieve high F1 scores, whereas some much larger categories remain more difficult.
 
-Policy Change and International and Specific Audiences are among the smallest categories yet score highest (F1 0.88), because both use distinctive formulaic vocabulary (``we may update this policy from time to time''; ``residents of the European Economic Area'') that a model learns from relatively few examples.
+Policy Change and International and Specific Audiences are among the smallest categories yet score highest (F1 0.84 and 0.87 respectively), because both use distinctive formulaic vocabulary (``we may update this policy from time to time''; ``residents of the European Economic Area'') that a model learns from relatively few examples.
 
 The dominant error mode is confusion between First Party Collection/Use and Third Party Sharing/Collection: both describe data collection and differ chiefly in who receives the data, a distinction sometimes carried by a single noun phrase within a short span.
 
@@ -315,7 +313,7 @@ Data Retention is the one category where scarcity appears to matter: precision i
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figures/confusion_matrices_classical.png}
-\caption{Row-normalized confusion matrices for the three classical models on the policy-disjoint test set.}
+\caption{Confusion matrices (raw counts) for the three classical models on the policy-disjoint test set.}
 \label{fig:confusion}
 \end{figure*}
 
@@ -358,7 +356,7 @@ The most pressing fixes are:
 \item Apply the designed lemmatized preprocessing to recurrent models to isolate its effect.
 \item Feed span-plus-clause context to specifically help the First Party versus Third Party confusion.
 \item Implement minority-class-aware training strategies for Data Retention.
-\item Execute a full, non-frozen BERT fine-tune given GPU access.
+\item Execute a full, non-frozen BERT fine-tune given a larger compute/time budget.
 \end{enumerate}
 
 \section*{Acknowledgments}
