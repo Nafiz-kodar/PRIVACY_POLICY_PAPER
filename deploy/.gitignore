@@ -10,3 +10,4 @@ out/
 # GitHub's 100MB per-file limit. The app only needs models/bert-privacy-policy/
 # (the quantized ONNX export), which IS tracked.
 model_raw/
+.vercel
