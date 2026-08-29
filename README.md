@@ -72,7 +72,21 @@ Project
 
 ## Live Demo
 
-`deploy/` contains a self-contained Next.js application that serves the fine-tuned BERT Base checkpoint directly via an in-browser/server ONNX runtime (`@huggingface/transformers`) — no external API calls at inference time. See [deploy/README.md](deploy/README.md) for local setup and deployment instructions.
+`deploy/` contains a self-contained Next.js application that serves the fine-tuned BERT Base checkpoint directly via an in-browser/server ONNX runtime (`@huggingface/transformers`) — no external API calls at inference time.
+
+### Running Locally
+
+```bash
+cd deploy
+npm install
+npm run dev
+```
+
+Then open **http://localhost:3000** in your browser, paste a privacy-policy sentence, and click **Classify**. The first request loads the model into memory; subsequent requests are fast (~15ms).
+
+### Deployment
+
+This app is ready to deploy to [Vercel](https://vercel.com). The model files are self-contained and Git LFS is configured (`.gitattributes`). After pushing to GitHub, add the repo as a new Vercel project and enable Git LFS in project Settings → Git before deploying.
 
 > This demo is an exploratory research artifact, not a compliance, legal, or safety verdict about any policy or company.
 
