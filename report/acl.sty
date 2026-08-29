@@ -1,0 +1,87 @@
+\ProvidesPackage{acl}[2026/08/29 ACL-compatible proceedings layout]
+
+\PassOptionsToPackage{a4paper,margin=2.5cm,heightrounded=true}{geometry}
+\RequirePackage{geometry}
+\RequirePackage{xcolor}
+\RequirePackage{caption}
+\RequirePackage{natbib}
+
+\setlength\columnsep{0.6cm}
+\newlength\titlebox
+\setlength\titlebox{13\baselineskip}
+\flushbottom
+\twocolumn
+\sloppy
+\pagestyle{empty}
+\thispagestyle{empty}
+
+\makeatletter
+\newcommand\outauthor{\begin{tabular}[t]{c}\bfseries\@author\end{tabular}}
+\AtBeginDocument{%
+  \def\maketitle{\par
+    \begingroup
+      \def\thefootnote{\fnsymbol{footnote}}%
+      \twocolumn[\@maketitle]%
+      \@thanks
+    \endgroup
+    \setcounter{footnote}{0}%
+    \let\maketitle\relax
+    \let\@maketitle\relax
+    \gdef\@thanks{}\gdef\@author{}\gdef\@title{}\let\thanks\relax}%
+  \def\@maketitle{\vbox to \titlebox{\hsize\textwidth
+    \linewidth\hsize
+    \vskip 0.125in minus 0.125in
+    \centering
+    {\Large\bfseries \@title\par}
+    \vskip 0.2in plus 1fil minus 0.1in
+    {\large\hbox to \linewidth{\hfil\outauthor\hfil}}
+    \vskip 0.3in plus 2fil minus 0.1in}}%
+}
+
+\renewenvironment{abstract}{%
+  \begin{center}\large\textbf{\abstractname}\end{center}%
+  \begin{list}{}{\setlength{\rightmargin}{0.6cm}\setlength{\leftmargin}{0.6cm}}%
+  \item[]\ignorespaces
+  \@setsize\normalsize{12pt}\xpt\@xpt
+}{\unskip\end{list}}
+
+\DeclareCaptionFont{aclten}{\fontsize{10pt}{12pt}\selectfont}
+\captionsetup{font=aclten}
+
+\renewcommand\cite{\citep}
+\newcommand\shortcite{\citeyearpar}
+\newcommand\newcite{\citet}
+\newcommand{\citeposs}[1]{\citeauthor{#1}'s (\citeyear{#1})}
+
+\def\section{\@startsection{section}{1}{\z@}{-2.0ex plus -0.5ex minus -.2ex}{1.5ex plus .3ex minus .2ex}{\large\bfseries\raggedright}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{-1.8ex plus -0.5ex minus -.2ex}{0.8ex plus .2ex}{\normalsize\bfseries\raggedright}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{-1.5ex plus -0.5ex minus -.2ex}{0.5ex plus .2ex}{\normalsize\bfseries\raggedright}}
+\def\paragraph{\@startsection{paragraph}{4}{\z@}{1.5ex plus .5ex minus .2ex}{-1em}{\normalsize\bfseries}}
+
+\parindent 1em
+\topsep 4pt plus 1pt minus 2pt
+\partopsep 1pt plus .5pt minus .5pt
+\itemsep 2pt plus 1pt minus .5pt
+\parsep 2pt plus 1pt minus .5pt
+\leftmargin 2em
+\leftmargini\leftmargin
+\leftmarginii 2em
+\leftmarginiii 1.5em
+\labelsep 5pt
+\def\@listi{\leftmargin\leftmargini}
+\abovedisplayskip 7pt plus 2pt minus 5pt
+\belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip 0pt plus 3pt
+\belowdisplayshortskip 4pt plus 3pt minus 3pt
+
+\def\@normalsize{\@setsize\normalsize{11pt}\xpt\@xpt}
+\def\small{\@setsize\small{10pt}\ixpt\@ixpt}
+\def\footnotesize{\@setsize\footnotesize{10pt}\ixpt\@ixpt}
+\def\scriptsize{\@setsize\scriptsize{8pt}\viipt\@viipt}
+\def\large{\@setsize\large{14pt}\xiipt\@xiipt}
+\def\Large{\@setsize\Large{16pt}\xivpt\@xivpt}
+\makeatother
+
+\RequirePackage{hyperref}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+\hypersetup{colorlinks=true,citecolor=darkblue,linkcolor=darkblue,urlcolor=darkblue}
